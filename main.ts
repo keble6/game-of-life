@@ -29,15 +29,18 @@ function nextGeneration () {
 }
 // Start with a random population, then run
 input.onButtonPressed(Button.A, function () {
+    changed = true
     init()
     randomizeWorld()
     render()
-    while (true) {
+    while (changed) {
         nextGeneration()
         swapWorlds()
         render()
+        music.playTone(523, music.beat(BeatFraction.Whole))
         basic.pause(1000)
     }
+    music.startMelody(music.builtInMelody(Melodies.Ringtone), MelodyOptions.Once)
 })
 function init () {
     generation = 0
@@ -54,28 +57,11 @@ function init () {
     [1, 1, 6]
     ]
 }
-input.onButtonPressed(Button.AB, function () {
-    basic.showNumber(generation)
-    basic.pause(1000)
-    while (true) {
-        nextGeneration()
-        swapWorlds()
-        render()
-        basic.pause(1000)
-    }
-})
 function randomizeWorld () {
     for (let cellId = 0; cellId <= 24; cellId++) {
         world[cellId] = randint(0, 1)
     }
 }
-// Single step
-input.onButtonPressed(Button.B, function () {
-    init()
-    nextGeneration()
-    swapWorlds()
-    render()
-})
 function render () {
     basic.clearScreen()
     for (let cellId2 = 0; cellId2 <= 24; cellId2++) {
@@ -85,16 +71,12 @@ function render () {
     }
 }
 function swapWorlds () {
+    changed = false
     for (let cellId4 = 0; cellId4 <= 24; cellId4++) {
-        changed = false
         if (world[cellId4] != world2[cellId4]) {
             changed = true
         }
         world[cellId4] = world2[cellId4]
-    }
-    if (changed == false) {
-        basic.showIcon(IconNames.No)
-        basic.pause(100)
     }
 }
 let changed = false
@@ -107,4 +89,5 @@ let targetCellY = 0
 let targetCellX = 0
 let friendsMatrix: number[][] = []
 let friends = 0
-init()
+music.startMelody(music.builtInMelody(Melodies.Prelude), MelodyOptions.Once)
+basic.showString("A to start")
