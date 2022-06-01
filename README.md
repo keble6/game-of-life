@@ -1,3 +1,9 @@
+I adapted [this](https://makecode.microbit.org/17522-94086-14142-42006) published project: a minor tidy up and simplification, and added some sounds.
+
+Button A is used to start/restart the game.
+
+The game stops when it has reached a stable state (no change between generations).
+
 
 > Open this page at [https://keble6.github.io/game-of-life/](https://keble6.github.io/game-of-life/)
 
